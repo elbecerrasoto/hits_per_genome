@@ -13,9 +13,35 @@ library(tidyverse)
 TARGETS <- list(ecoli="/run/media/ebecerra/manjaro500/home/ebecerra/2-projects/results/e_coli_255/2-pfams")
 
 
+HEADER <- c("protein",
+            "md5",
+            "lenght",
+            "analysis",
+            "memberDB",
+            "memberDB_txt",
+            "start",
+            "end",
+            "score",
+            "status",
+            "date",
+            "interpro",
+            "interpro_txt",
+            "GOs",
+            "pathways")
+
+
 read_strain_dirs <- function  (list_of_dirs)
 {
-  map(list_of_dirs, list.files, full.names = TRUE)
+
+  expand_into_tables <- function (path)
+  {
+    list.files(path, full.names = TRUE) %>%
+      str_subset("\\.tsv$") %>%
+      map(read_tsv, col_names = HEADER)
+  }
+
+  map(list_of_dirs, expand_into_tables)
+
 }
 
-print(read_strain_dirs(TARGETS))
+x <- suppressMessages(read_strain_dirs(TARGETS))

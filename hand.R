@@ -5,6 +5,10 @@ library(tidyverse)
 # emacs text expansion
 # TODO: expand M-- to <- and C-M-m to %>%
 
+# input: strain directories
+# output single table with:
+# genome strain pfam counts matching_proteins
+
 STRAINS <- list(ecoli="./test_strains/ecoli", cenocepacia="./test_strains/cenocepacia")
 
 
@@ -76,5 +80,5 @@ get_strain_tables <- function()
 }
 
 
-STRAIN_TABLES <- get_strain_tables()
-print(STRAIN_TABLES)
+SINGLE_TABLE <- reduce(get_strain_tables(), bind_rows)
+print(SINGLE_TABLE)

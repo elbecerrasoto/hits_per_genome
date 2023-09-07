@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 
 library(tidyverse)
+# library(furrr) future_map
 
 # emacs text expansion
 # TODO: expand M-- to <- and C-M-m to %>%

@@ -2,14 +2,14 @@
 
 library(tidyverse)
 
-# emacs text expansion
-# TODO: expand M-- to <- and C-M-m to %>%
 
 # input: strain directories
-# output: single table with:
-  # genome strain pfam counts matching_proteins
+# output: single table with
+# colnames: genome strain pfam counts matching_proteins
 
 STRAINS <- list(ecoli="./test_strains/ecoli", cenocepacia="./test_strains/cenocepacia")
+
+SUBSET_PFAMS <- c("PF05593", "PF05488")
 
 
 read_pfam_tsv <- function(pfam_tsv, strain)
@@ -19,8 +19,8 @@ read_pfam_tsv <- function(pfam_tsv, strain)
               "md5",
               "lenght",
               "analysis",
-              "memberDB",
-              "memberDB_txt",
+              "pfam",
+              "pfam_txt",
               "start",
               "end",
               "score",
@@ -31,16 +31,17 @@ read_pfam_tsv <- function(pfam_tsv, strain)
               "GOs",
               "pathways")
 
-  SUBSET <- c("protein",
-              "memberDB",
-              "memberDB_txt")
+  SUBSET_COLS <- c("protein",
+              "pfam",
+              "pfam_txt")
 
   # regex is not robust, path needs at least one /
   genome <- str_replace(pfam_tsv, ".*/(.*?)\\.pfam\\.tsv$", "\\1")
 
   return(
   read_tsv(pfam_tsv, col_names = HEADER) %>%
-    select(all_of(SUBSET)) %>%
+    select(all_of(SUBSET_COLS)) %>%
+    filter(pfam %in% SUBSET_PFAMS) %>%
     add_column(strain=strain, .before="protein") %>%
     add_column(genome=genome, .before="strain")
   )

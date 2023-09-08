@@ -33,7 +33,9 @@ read_pfam_tsv <- function(pfam_tsv, strain)
 
   SUBSET_COLS <- c("protein",
               "pfam",
-              "pfam_txt")
+              "pfam_txt",
+              "start",
+              "end")
 
   # regex is not robust, path needs at least one /
   genome <- str_replace(pfam_tsv, ".*/(.*?)\\.pfam\\.tsv$", "\\1")

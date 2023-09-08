@@ -6,8 +6,8 @@ library(tidyverse)
 # TODO: expand M-- to <- and C-M-m to %>%
 
 # input: strain directories
-# output single table with:
-# genome strain pfam counts matching_proteins
+# output: single table with:
+  # genome strain pfam counts matching_proteins
 
 STRAINS <- list(ecoli="./test_strains/ecoli", cenocepacia="./test_strains/cenocepacia")
 

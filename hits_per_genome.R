@@ -85,3 +85,4 @@ get_strain_tables <- function()
 
 SINGLE_TABLE <- reduce(get_strain_tables(), bind_rows)
 print(SINGLE_TABLE)
+write_tsv(SINGLE_TABLE, "hits_per_genome.tsv")

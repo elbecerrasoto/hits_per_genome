@@ -1,11 +1,13 @@
-SCRIPT="hits_per_genome.R"
+SCRIPT=hits_per_genome.R
+TAB=hits_per_genome.tsv
 
-.PHONY: run
-run:
+$(TAB): $(SCRIPT)
 	Rscript $(SCRIPT) 2> /dev/null
 
 .PHONY: debug
 debug:
 	Rscript $(SCRIPT)
 
-
+.PHONY: style
+style:
+	Rscript - <<< 'styler::style_dir("./")'

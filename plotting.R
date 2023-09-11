@@ -7,16 +7,12 @@ RHS_ID <- "PF05488"
 
 hits <- read_tsv("hits_per_genome.tsv", col_names = TRUE)
 
-paar <- hits |> filter(pfam == PAAR_ID)
-rhs <- hits |> filter(pfam == RHS_ID)
-
-paar |>
-  add_count(protein)
-
-
-paar |>
-  ggplot() +
-  geom_jitter(aes(x = strain, y = n))
+# to protein table
+x |> select(-start, -end) |> distinct() -> y
+# collapse genomes and pfams
+y |> add_count(genome, pfam) |> select(-protein) |> distinct() -> z
 
 
-View(hits)
+z |>
+    ggplot(aes(x = strain, y = n))+
+    geom_boxplot()+geom_jitter(alpha=1/2, size=0.8, shape=1)+facet_grid(~pfam_txt)
